@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Relógio</title>
+</head>
+<body>
+<img src="" alt="">
+    <div class="base-largura base-relogio">
+        <div class="relogio">
+            <ol>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+
+            <div id="hora"></div>
+            <div id="min"></div>
+            <div id="sec"></div>
+        </div>
+    </div>
+
+
+<script>
+    window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
+    //inicializar o auto-invocação do relógio
+    (function relogio(){ 
+        var hora = document.getElementById("hora"),
+            min = document.getElementById("min"),
+            sec = document.getElementById("sec");
+
+        //configuração loop
+        (function loop(){
+            requestAnimFrame(loop);
+            draw();
+        })();
+
+    //posição dos ponteiros
+    function draw(){
+            var now = new Date(),//now
+                then = new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0),//midnight
+                diffInMil = (now.getTime() - then.getTime()),// difference in milliseconds
+                h = (diffInMil/(1000*60*60)),//horas
+                m = (h*60),//minutos
+                s = (m*60);//segundos
+
+    //rotação dos ponteiros
+        sec.style.webkitTransform = "rotate(" + (s * 6) + "deg)";
+        hora.style.webkitTransform = "rotate(" + (h * 30 + (h / 2)) + "deg)";
+        min.style.webkitTransform = "rotate(" + (m * 6) + "deg)";
+    } 
+    })();
+
+
+</script>
+
+
+
+
+    
+    
+</body>
+</html>
